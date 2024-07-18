@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Editor</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #editor {
+            height: 300px;
+            width: 100%;
+        }
+        #output {
+            height: 300px;
+            width: 100%;
+            border: 1px solid #ced4da;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Code Editor</h1>
+        <div class="form-group">
+            <label for="language">Select Language:</label>
+            <select id="language" class="form-control" onchange="executeCode()">
+                <option value="html">HTML</option>
+                <option value="css">CSS</option>
+                <option value="javascript">JavaScript</option>
+                <option value="python">Python</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="editor">Write your code:</label>
+            <textarea id="editor" class="form-control" placeholder="Write your code here..."></textarea>
+        </div>
+        <h2 class="mt-4">Output:</h2>
+        <iframe id="output"></iframe>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function executeCode() {
+            const language = document.getElementById('language').value;
+            const code = document.getElementById('editor').value;
+            const output = document.getElementById('output');
+
+            if (language === 'html') {
+                output.srcdoc = code;
+            } else if (language === 'css') {
+                const cssCode = `<style>${code}</style>`;
+                output.srcdoc = cssCode;
+            } else if (language === 'javascript') {
+                const jsCode = `<script>${code}<\/script>`;
+                output.srcdoc = jsCode;
+            } else if (language === 'python') {
+                output.srcdoc = 'Python execution is not supported in the browser.';
+            }
+        }
+
+        // Add event listener to textarea to execute code on input
+        document.getElementById('editor').addEventListener('input', executeCode);
+
+        // Initialize code execution on page load
+        window.onload = executeCode;
+    </script>
+</body>
+</html>
